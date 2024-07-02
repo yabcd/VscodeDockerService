@@ -1,0 +1,117 @@
+{
+  "name": "docker-service",
+  "displayName": "docker-service",
+  "description": "docker service with ssh",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "package-explorer",
+          "title": "Package Explorer",
+          "icon": "media/dep.svg"
+        }
+      ]
+    },
+    "views": {
+      "package-explorer": [
+        {
+          "id": "dockerService",
+          "name": "Dokcer Service",
+          "icon": "media/dep.svg",
+          "contextualTitle": "Package Explorer"
+        },
+        {
+          "id": "dockerService2",
+          "type": "webview",
+          "name": "Node Dependencies",
+          "icon": "media/dep.svg",
+          "contextualTitle": "Package Explorer"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "dockerService.addItem",
+          "when": "view == dockerService"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "dockerService.deleteItem",
+          "when": "viewItem == 0"
+        },
+        {
+          "command": "dockerService.updateItem",
+          "when": "viewItem == 0"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "dockerService.refresh",
+        "category": "Docker Service Refresh",
+        "title": "Docker Service Refresh"
+      },
+      {
+        "command": "dockerService.addItem",
+        "title": "添加连接"
+      },
+      {
+        "command": "dockerService.updateItem",
+        "title": "更新连接"
+      },
+      {
+        "command": "dockerService.deleteItem",
+        "title": "删除连接"
+      },
+      {
+        "command": "dockerService.singleClick",
+        "title": "单击"
+      },
+      {
+        "command": "dockerService.doubleClick",
+        "title": "双击"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.21.5",
+    "eslint": "^8.57.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "node-ssh": "^13.2.0"
+  }
+}
